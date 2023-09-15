@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h2>Інформація про Автора</h2>
+<h3>{{ author.name }}</h3>
+<ul>
+    {% for quote in quotes %}
+    <li>{{ quote.text }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

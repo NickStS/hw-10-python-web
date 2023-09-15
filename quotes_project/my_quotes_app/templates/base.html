@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'your_css_file.css' %}">
+    <script src="{% static 'your_js_file.js' %}"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Hello, World</h1>
+    </header>
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer>
+        <p>&copy; 2023 GoIt WebSite</p>
+    </footer>
+</body>
+
+</html>
