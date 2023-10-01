@@ -17,6 +17,7 @@ Including another URLconf
 
 from django.urls import path
 from . import views
+from .views import YourCustomPasswordResetView
 
 app_name = 'my_quotes_app'
 
@@ -25,5 +26,5 @@ urlpatterns = [
     path('add_quote/', views.add_quote, name='add_quote'),
     path('author/<int:author_id>/', views.author_detail, name='author_detail'),
     path('quote_list/', views.quote_list, name='quote_list'),
+    path('accounts/password_reset_custom/', YourCustomPasswordResetView.as_view(), name='account_reset_password_custom'),
 ]
-

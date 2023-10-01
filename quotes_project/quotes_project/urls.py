@@ -17,6 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from my_quotes_app import views
+from django.urls import path
+from allauth.account.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +31,8 @@ urlpatterns = [
     path('quotes/', views.quote_list, name='quote_list'),
     path('', include('my_quotes_app.urls')), 
     path('', views.quote_list, name='quote_list'),
+    path('accounts/password_reset/', PasswordResetView.as_view(), name='account_reset_password'),
+    path('accounts/password_reset/done/', PasswordResetDoneView.as_view(), name='account_reset_password_done'),
+    path('accounts/reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='account_reset_password_confirm'),
+    path('accounts/reset/done/', PasswordResetCompleteView.as_view(), name='account_reset_password_complete'),
 ]

@@ -4,6 +4,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import UserRegistrationForm, UserLoginForm, AuthorForm, QuoteForm
 from .models import Author, Quote
+from django.urls import reverse
+from allauth.account.views import PasswordResetView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 
 @login_required
 def add_author(request):
@@ -63,3 +67,14 @@ def user_login(request):
     else:
         form = UserLoginForm()
     return render(request, 'registration/login.html', {'form': form})
+
+
+class YourCustomPasswordResetView(SuccessMessageMixin, PasswordResetView):
+    template_name = 'your_custom_password_reset_template.html'
+
+    def form_valid(self, form):
+        messages.success(self.request, 'An email with instructions on how to reset your password has been sent.')
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('login')

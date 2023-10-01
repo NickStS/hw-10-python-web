@@ -42,7 +42,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'my_quotes_app',
+    'allauth',
+    'allauth.account',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    # ...
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+AUTH_USER_MODEL = 'my_quotes_app.CustomUser'  # Замените 'your_app_name' на имя вашей модели пользователя
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -73,6 +83,23 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'quotes_project.wsgi.application'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
+
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+
+ACCOUNT_FORMS = {
+    'reset_password': 'my_quotes_app.forms.YourCustomPasswordResetForm',
+}
+
+
 
 
 # Database
