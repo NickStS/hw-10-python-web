@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'my_quotes_app',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -51,7 +53,7 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-AUTH_USER_MODEL = 'my_quotes_app.CustomUser'  # Замените 'your_app_name' на имя вашей модели пользователя
+AUTH_USER_MODEL = 'my_quotes_app.CustomUser'
 
 
 MIDDLEWARE = [
@@ -93,13 +95,36 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_SUBJECT_PREFIX = 'my_quotes_app'
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
+ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
+
+
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 
 ACCOUNT_FORMS = {
     'reset_password': 'my_quotes_app.forms.YourCustomPasswordResetForm',
 }
 
+AUTHENTICATION_CLASSES = (
+    # ...
+    'allauth.account.auth_backends.AuthenticationBackend',
+    # ...
+)
 
+load_dotenv()
+
+SECRET_KEY = os.getenv('SECRET_KEY')
+DEBUG = os.getenv('DEBUG') == 'True'
+DATABASE_URL = os.getenv('DATABASE_URL')
 
 
 # Database

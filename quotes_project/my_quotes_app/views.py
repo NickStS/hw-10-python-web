@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import UserRegistrationForm, UserLoginForm, AuthorForm, QuoteForm
 from .models import Author, Quote
 from django.urls import reverse
-from allauth.account.views import PasswordResetView
+from allauth.account.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 
@@ -70,7 +70,7 @@ def user_login(request):
 
 
 class YourCustomPasswordResetView(SuccessMessageMixin, PasswordResetView):
-    template_name = 'your_custom_password_reset_template.html'
+    template_name = 'password_reset_form.html'
 
     def form_valid(self, form):
         messages.success(self.request, 'An email with instructions on how to reset your password has been sent.')
@@ -78,3 +78,20 @@ class YourCustomPasswordResetView(SuccessMessageMixin, PasswordResetView):
 
     def get_success_url(self):
         return reverse('login')
+
+
+class YourCustomPasswordResetDoneView(PasswordResetDoneView):
+
+    def get(self, *args, **kwargs):
+        return super().get(*args, **kwargs)
+
+class YourCustomPasswordResetConfirmView(PasswordResetConfirmView):
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        return response
+
+class YourCustomPasswordResetCompleteView(PasswordResetCompleteView):
+
+    def get(self, *args, **kwargs):
+        return super().get(*args, **kwargs)
